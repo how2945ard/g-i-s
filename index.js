@@ -50,13 +50,15 @@ function gis(opts, done) {
     reqOpts.proxy = proxy;
   }
 
-  // console.log(reqOpts.url);
   request(reqOpts, parseGISResponse);
 
   function parseGISResponse(error, response, body) {
+    const statusCode = response.statusCode;
     if (error) {
-      done(error);
-      return;
+      return done(error);
+    }
+    if(statusCode !== 200){
+      return done(`Request Failed with statusCode ${statusCode}`);
     }
     var $ = cheerio.load(body);
     var scripts = $('script');
