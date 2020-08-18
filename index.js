@@ -10,11 +10,13 @@ var imageFileExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg'];
 function gis(opts, done) {
   var searchTerm;
   var queryStringAddition;
+  var proxy;
   var filterOutDomains = ['gstatic.com'];
 
   if (typeof opts === 'string') {
     searchTerm = opts;
   } else {
+    proxy = opts.proxy;
     searchTerm = opts.searchTerm;
     queryStringAddition = opts.queryStringAddition;
     filterOutDomains = filterOutDomains.concat(opts.filterOutDomains);
@@ -43,6 +45,11 @@ function gis(opts, done) {
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
     }
   };
+
+  if (proxy) {
+    reqOpts.proxy = proxy;
+    console.log('Using Proxy', proxy)
+  }
 
   // console.log(reqOpts.url);
   request(reqOpts, parseGISResponse);
