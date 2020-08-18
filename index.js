@@ -48,7 +48,6 @@ function gis(opts, done) {
 
   if (proxy) {
     reqOpts.proxy = proxy;
-    console.log('Using Proxy', proxy)
   }
 
   // console.log(reqOpts.url);
